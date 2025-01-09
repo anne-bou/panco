@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 #
 # This file is part of the panco project.
-# https://github.com/Huawei-Paris-Research-Center/Panco
+# https://github.com/anne-bou/panco
 
 from __future__ import annotations
 
@@ -242,3 +242,96 @@ def intersection(rl: RateLatency, tb: TokenBucket) -> Tuple[float, float]:
     """
     tau = (tb.sigma + rl.rate * rl.latency) / (rl.rate - tb.rho)
     return tau, tb.evaluate(tau)
+
+
+def _order_rl(rl: RateLatency) -> Tuple[float, float]:
+    """
+    Function returning a value for ordering rate-latency functions
+    :param rl: a rate-latency function
+    :return: the tuple  the ordering is based on.
+    """
+    return rl.latency, -rl.rate
+
+
+def _order_tb(tb: TokenBucket) -> Tuple[float, float]:
+    """
+    Function returning a value for ordering token-bucket functions
+    :param tb: a token-bucket function
+    :return: the tuple  the ordering is based on.
+        """
+    return tb.rho, tb.sigma
+
+
+def residual_general(beta: List[RateLatency], alpha: List[TokenBucket]):
+    """
+    From a service curve represented by a maximum of rate-latency functions and an arrival curve represented by a
+    minimum of token-bucket functions, compute the residual srvic curve.
+    :param beta: the servie curve :math:`\\beta = \\max_i \\beta_{R_i, T_i}`
+    :param alpha: the arrival curve: math:`\\alpha = \\min_j \\gamma_{\\sigma_j, \\rho_j}`
+    :return: The residual service curve (blind)
+    :math:`(\\beta-\\alpha)_+ = \\max+{i, j} \\beta_{R_i, T_i}- \\gamma_{\\sigma_j, \\rho_j}`
+    """
+    new_res = []
+    for rl in beta:
+        for tb in alpha:
+            new_res += [residual_blind(rl, tb)]
+    new_res.sort(key=_order_rl)
+    # print(new_res)
+    res = [new_res[0]]
+    for j in range(len(new_res) - 1):
+        if not new_res[j + 1] < new_res[j]:
+            res += [new_res[j + 1]]
+    return res
+
+
+def sum_ac(alpha1: List[TokenBucket], alpha2: List[TokenBucket]) -> List[TokenBucket]:
+    """
+    Function that computes the sum of token-bucket functions in to lists. Let :math:`[\\alpha_{b_i, r_i}]`
+    and :math:`[\\alpha'_{b_i, r_i}]` be two lists of the same length, it computes the list of token-bucket functions
+    :math:`[\\alpha_{b_i, r_i} +\\alpha'_{b_i, r_i}]`.
+    :param alpha1: the first list of token-bucket functions
+    :param alpha2: the second list of token-bucket funtions
+    :return: the list of the sum of the functions
+    """
+    res = []
+    for tb2 in alpha2:
+        res += [tb_sum([tb1, tb2]) for tb1 in alpha1]
+    return res
+
+
+def clean(alpha: List[TokenBucket]) -> List[TokenBucket]:
+    """
+    From a list of token-bucket functions representing the minimum of these function, only keep those that are useful
+    in the repreesentation.
+    :param alpha: the list of function
+    :return: the sublist of the useful token-buckets
+    """
+    if not alpha:
+        return []
+    alpha.sort(key=_order_tb)
+    res = [alpha[0]]
+    for j in range(len(alpha) - 1):
+        if not (alpha[j] < alpha[j + 1] or alpha[j] == alpha[j + 1]):
+            res += [alpha[j + 1]]
+    return res
+
+
+def sum_ac_list(alpha: List[List[TokenBucket]]) -> List[TokenBucket]:
+    """
+    Compute the by-term sum of lists of  token-bucket functions.
+    :param alpha: list of token-bucket functions
+    :return: the list of the sum of the functions
+    """
+    length = len(alpha)
+    if length == 0:
+        return []
+    res = alpha[0]
+    i = 1
+    while i < length:
+        # print(res, alpha[i])
+        res = sum_ac(res, alpha[i])
+        # print('before clean', res)
+        res = clean(res)
+        # print('after clean', res)
+        i += 1
+    return res

@@ -3,7 +3,7 @@
 #
 
 # This file is part of the panco project.
-# https://github.com/Huawei-Paris-Research-Center/Panco
+# https://github.com/anne-bou/panco
 
 from __future__ import annotations
 

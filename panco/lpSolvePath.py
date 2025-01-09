@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 #
 # This file is part of the panco project.
-# https://github.com/Huawei-Paris-Research-Center/Panco
+# https://github.com/anne-bou/panco
 
 __author__ = "Anne Bouillard"
 __maintainer__ = "Anne Bouillard"
