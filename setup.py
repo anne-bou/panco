@@ -40,8 +40,9 @@ setup(
     long_description=README + '\n\n' + HISTORY,
     keywords='panco',
     name='panco',
-    packages=['panco', 'panco.descriptor', 'panco.fifo'],
-    url='https://github.com//Huawei-Paris-Research-Center/Panco',
+    packages=['panco', 'panco.descriptor', 'panco.fifo', 'panco.staticpriorities',
+              'panco.tsn', 'panco.edf'],
+    url='https://github.com//anne-bou/panco',
     version='0.1.0',
     zip_safe=False,
 )
