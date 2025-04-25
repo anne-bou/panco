@@ -9,4 +9,7 @@ Python 3, with numpy package installed, and [lp_solve](https://sourceforge.net/p
 # Installation:
 ```
 pip install .
-```` 
+````
+
+# Documentation: 
+The *work in progress* documentation can be found [there](https://www.di.ens.fr/~bouillar/Panco/html/index.html)
