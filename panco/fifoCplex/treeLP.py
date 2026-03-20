@@ -8,8 +8,8 @@ from __future__ import annotations
 
 __author__ = "Anne Bouillard"
 __maintainer__ = "Anne Bouillard"
-__email__ = "anne.bouillard@huawei.com"
-__copyright__ = "Copyright (C) 2022, Huawei Technologies France"
+__email__ = "anne.bouillard@ens.fr"
+__copyright__ = "Copyright (C) 2026"
 __license__ = "BSD-3"
 
 import subprocess as sp
