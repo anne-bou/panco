@@ -5,6 +5,7 @@ Panco (Performance Analysis with Network Calculus and Optimization) regroups a s
 Several directories are proposed: 
 - **descriptor** describes a network, by describing a set of flows and of servers
 - **fifo** is the implementation of the fifo multiplexing analysis
+- **fifoCplex** is an improved version where the LP solver is Cplex instead of lp_solve. This greatly accelerates the solving time of the LPs, and computation of the performance upper bounds. 
 - **edf** focuses on the Earliest-Deadline-First scheduling policy
 - **staticpriorities** on the priorities
 - **tsn** on the implementation of some TSN mechanisms, mainly the AVB/CBS scheduling (with taking into account the gate openings for the ime-triggered flows.
@@ -34,6 +35,7 @@ The modules are mainly basec on the following publications:
 
 # Requirements: 
 Python 3, with numpy package installed, and [lp_solve](https://sourceforge.net/projects/lpsolve/)
+Tu use **fifoCplex** the installation of [Cplex](https://www.ibm.com/fr-fr/products/ilog-cplex-optimization-studio) is required. 
 
 # Installation:
 ```
@@ -43,3 +45,6 @@ in the directory either globally or in a virtual environment
 
 # Documentation: 
 The *work in progress* documentation can be found [there](https://www.di.ens.fr/~bouillar/Panco/html/index.html)
+
+# Caveat:
+the **fifoCplex** part is only valid for feed-forward/ stable network. If an unstable network is analyzed, it may simply return an error, because this case has not been taken into account yet. 
