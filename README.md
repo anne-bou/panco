@@ -41,7 +41,8 @@ Tu use **fifoCplex** the installation of [Cplex](https://www.ibm.com/fr-fr/produ
 ```
 pip install .
 ````
-in the directory either globally or in a virtual environment
+in the directory either globally or in a virtual environment. 
+This also requires entering the path to cplex (l.99/100 of `cPlex_lex.py`), and path to lp_solve in `lpSolvePath.py`). 
 
 # Documentation: 
 The *work in progress* documentation can be found [there](https://www.di.ens.fr/~bouillar/Panco/html/index.html)
