@@ -8,8 +8,8 @@ from __future__ import annotations
 
 __author__ = "Anne Bouillard"
 __maintainer__ = "Anne Bouillard"
-__email__ = "anne.bouillard@ens.fr"
-__copyright__ = "Copyright (C) 2026"
+__email__ = "anne.bouillard@huawei.com"
+__copyright__ = "Copyright (C) 2022, Huawei Technologies France"
 __license__ = "BSD-3"
 
 import subprocess as sp
@@ -17,18 +17,16 @@ import subprocess as sp
 from panco.fifoCplex.admTFA import AdmTfaCpx
 from panco.fifoCplex.elpConstraints import ELPConstraintsCpx
 from panco.fifoCplex.plpConstraints import PLPConstraintsCpx
-from panco.fifo.sfaLP import SfaLP
 from panco.fifoCplex.sfaLP import SfaLPCpx
-# from panco.fifo.tfaLP import TfaLP
-from panco.lpSolvePath import LPSOLVEPATH
-from panco.fifo.admTFA import AdmTfa
+from panco.fifoCplex.admTFA import AdmTfaCpx
 from panco.fifoCplex.cplex_lex import sol_extraction, lex_cplex, extract_obj, cplex_solve
 
 
 
 class TreeLPCpx:
     # Linear analysis for fifo tree networks
-    def __init__(self, network, foi, polynomial=True, sfa=False, tfa=False, filename="fifocplex.lp"):
+    def __init__(self, network, foi, polynomial: bool=True, sfa: bool=False, tfa: bool=False,
+                 filename="fifocplex.lp"):
         self.network = network
         self.foi = foi
         # self.constraints = LPConstraints(network, foi)
@@ -47,16 +45,17 @@ class TreeLPCpx:
             self.constraints = ELPConstraintsCpx(network, foi)
         self.filename = filename
 
-    def burst_constraints(self, file):
-        for i in range(self.network.num_flows):
-            file.write('x{0} = {1}\n'.format(i, self.network.flows[i].arrival_curve[0].sigma))
-
     def delay_objective(self, file):
         if self.network.path[self.foi][-1] == self.network.num_servers - 1:
             file.write('maximize \n obj: t0e0 - t{}e0\n'.format(self.constraints.t_min[self.network.path[self.foi][0]]))
         else:
             file.write('flow do not stop at last server\n')
         file.write('subject to\n')
+
+    def burst_constraints(self, file):
+        for i in range(self.network.num_flows):
+            file.write('x{0} = {1}\n'.format(i, self.network.flows[i].arrival_curve[0].sigma))
+
 
     @property
     def delay(self):
