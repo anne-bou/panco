@@ -4,8 +4,8 @@ Panco (Performance Analysis with Network Calculus and Optimization) regroups a s
 
 Several directories are proposed: 
 - **descriptor** describes a network, by describing a set of flows and of servers
-- **fifo** is the implementation of the fifo multiplexing analysis
-- **fifoCplex** is an improved version where the LP solver is Cplex instead of lp_solve. This greatly accelerates the solving time of the LPs, and computation of the performance upper bounds. 
+- **fifo** is the implementation of the fifo multiplexing analysis. Now, a separated file for the analysis of trees (of topologies not cut) that allows concave arrival curve for the flow of interest, as in the original verison in [2], that was left unimplemented)
+- **fifoCplex** is an improved version where the LP solver is Cplex instead of lp_solve. This greatly accelerates the solving time of the LPs, and computation of the performance upper bounds. Now, a separated file for the analysis of trees (of topologies not cut) that allows concave arrival curve for the flow of interest, as in the original verison in [2], that was left unimplemented)
 - **edf** focuses on the Earliest-Deadline-First scheduling policy
 - **staticpriorities** on the priorities
 - **tsn** on the implementation of some TSN mechanisms, mainly the AVB/CBS scheduling (with taking into account the gate openings for the ime-triggered flows.
@@ -28,10 +28,6 @@ The modules are mainly basec on the following publications:
   [7] Luxi Zhao, Paul Pop, Zhong Zheng, Hugo Daigmorte, and Marc Boyer. Latency analysis of multiple classes of AVB traffic in TSN with standard credit behavior using network calculus. IEEE Trans. Ind. Electron., 68(10):102911--10302,  2021. (**TSN**)
 
   [8] Anne Bouillard. Earliest-deadline-first in sink trees, WONECA 2022. [video](https://www.youtube.com/watch?v=4B0ST5TsGiI&list=PLGrWRLGd9yS_nezfKdxK1x-e3yNt1krwj&index=14]), [slides](https://drive.google.com/file/d/12Vvblys74SuEuMzeQ5wWL7cSlr3ngy0n/view) (**EDF**)
-
- 
-  
-
 
 # Requirements: 
 Python 3, with numpy package installed, and [lp_solve](https://sourceforge.net/projects/lpsolve/)
