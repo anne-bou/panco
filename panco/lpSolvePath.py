@@ -11,4 +11,20 @@ __copyright__ = "Copyright (C) 2022, Huawei Technologies France"
 __license__ = "BSD-3"
 
 
-LPSOLVEPATH = ["wsl", "lp_solve", "-s5"]
+import platform
+import shutil
+
+def get_lpsolve_path():
+    if platform.system() == "Linux":
+        if shutil.which("lp_solve"):
+            return ["lp_solve", "-s5"]
+        else:
+            return None
+    elif platform.system() == "Windows":
+        if shutil.which("wsl"):
+            return ["wsl", "lp_solve", "-s5"]
+        else:
+            return None
+    else:
+        return None
+LPSOLVEPATH = get_lpsolve_path()

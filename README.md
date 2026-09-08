@@ -31,7 +31,16 @@ The modules are mainly basec on the following publications:
 
 # Requirements: 
 Python 3, with numpy package installed, and [lp_solve](https://sourceforge.net/projects/lpsolve/)
-Tu use **fifoCplex** the installation of [Cplex](https://www.ibm.com/fr-fr/products/ilog-cplex-optimization-studio) is required. 
+To use **fifoCplex**, the installation of [Cplex](https://www.ibm.com/fr-fr/products/ilog-cplex-optimization-studio) is required. 
+
+## Install lp_solve
+### Windows Users
+
+Use WSL and install `lp_solve` in the WSL environment.
+
+### Ubuntu / Debian Users
+
+Install `lp_solve` with apt
 
 # Installation:
 ```
