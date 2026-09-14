@@ -4,7 +4,7 @@
 # This file is part of the panco project.
 # https://github.com/anne-bou/panco
 
-__author__ = "Anne Bouillard"
+__author__ = "Anne Bouillard, Ludovic Thomas (Loria)"
 __maintainer__ = "Anne Bouillard"
 __email__ = "anne.bouillard@huawei.com"
 __copyright__ = "Copyright (C) 2022, Huawei Technologies France"
